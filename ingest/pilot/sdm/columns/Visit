@@ -1,0 +1,15 @@
+visit
+physical_filter
+band
+ra
+dec
+skyRotation
+azimuth
+altitude
+zenithDistance
+airmass
+expTime
+expMidpt
+expMidptMJD
+obsStart
+obsStartMJD

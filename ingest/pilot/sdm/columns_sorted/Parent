@@ -1,0 +1,15 @@
+deblend_chi2
+deblend_failed
+deblend_incompleteData
+deblend_iterations
+deblend_nChild
+deblend_nPeaks
+deblend_skipped
+deblend_skipped_isPseudo
+deblend_skipped_isolatedParent
+deblend_skipped_masked
+deblend_skipped_parentTooBig
+deblend_skipped_tooManyPeaks
+merge_peak_sky
+objectId
+parentObjectId

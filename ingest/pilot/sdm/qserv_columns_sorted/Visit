@@ -1,0 +1,17 @@
+airmass
+altitude
+azimuth
+band
+dec
+decl
+expMidpt
+expMidptMJD
+expTime
+obsStart
+obsStartMJD
+physical_filter
+ra
+skyRotation
+visit
+visitId
+zenithDistance

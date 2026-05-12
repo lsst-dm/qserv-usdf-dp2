@@ -1,0 +1,11 @@
+id
+packed_primary_provisional_designation
+packed_secondary_provisional_designation
+unpacked_primary_provisional_designation
+unpacked_secondary_provisional_designation
+published
+identifier_ids
+object_type
+numbered
+created_at
+updated_at

@@ -1,0 +1,15 @@
+# Fix the MySQL grants at workers by applying a work around for a bug
+# in the implementaton of the Relication/Ingest system:
+
+cd /zfspool/management/qserv-slac/instance/slac6test
+for host in $(cat config/workers); do
+  echo $host;
+  ssh $host "mysql -h127.0.0.1 -P3368 -uroot -p***** mysql -e 'GRANT ALL PRIVILEGES ON dp1.* TO  qsmaster@127.0.0.1; FLUSH PRIVILEGES'";
+done
+
+cd /zfspool/management/qserv-slac/instance/slac6test
+for host in $(cat config/workers); do
+  echo $host;
+  ssh $host "mysql -h127.0.0.1 -P3368 -uroot -p***** mysql"
+done
+cd -
