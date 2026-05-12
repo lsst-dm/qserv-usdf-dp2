@@ -1,0 +1,7 @@
+{
+  "api-version":    56,
+  "instance-id":    "CHANGEME-INSTANCE-ID",
+  "repl-contr-url": "http://qserv-repl-0.qserv-repl:25081",
+  "auth-key":       "CHANGEME-AUTH-KEY",
+  "admin-auth-key": "CHANGEME-ADMIN-AUTH-KEY"
+}

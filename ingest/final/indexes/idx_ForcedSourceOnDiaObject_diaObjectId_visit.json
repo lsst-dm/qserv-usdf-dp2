@@ -1,0 +1,19 @@
+{
+    "database": "dp2",
+    "table": "ForcedSourceOnDiaObject",
+    "index": "idx_diaObjectId_visit",
+    "comment": "The non-unique composite index on the objectId FK and the local column visit",
+    "columns": [
+        {
+            "column": "diaObjectId",
+            "length": 0,
+            "ascending": 1
+        },
+        {
+            "column": "visit",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

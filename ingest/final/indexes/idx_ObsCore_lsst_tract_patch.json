@@ -1,0 +1,19 @@
+{
+    "database": "ivoa",
+    "table": "ObsCore",
+    "index": "idx_lsst_tract_patch",
+    "comment": "The non-unique index on the columns lsst_tract and lsst_patch",
+    "columns": [
+        {
+            "column": "lsst_tract",
+            "length": 0,
+            "ascending": 1
+        },
+	{
+            "column": "lsst_patch",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

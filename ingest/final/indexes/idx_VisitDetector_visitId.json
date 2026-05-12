@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "VisitDetector",
+    "index": "idx_visitId",
+    "comment": "The non-unique index on the visit identifier, which is the FK for entries in the table Visit",
+    "columns": [
+        {
+            "column": "visitId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

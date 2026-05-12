@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "CoaddPatches_lsst_tract",
+    "index": "idx_lsst_tract",
+    "comment": "The non-unique index on the column lsst_tract",
+    "columns": [
+        {
+            "column": "lsst_tract",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

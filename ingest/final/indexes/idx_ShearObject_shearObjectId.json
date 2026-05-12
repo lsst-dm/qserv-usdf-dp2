@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "ShearObject",
+    "index": "idx_shearObjectId",
+    "spec": "UNIQUE",
+    "comment": "The unique index on the primary key for the object identifiers",
+    "columns": [
+        {
+            "column": "shearObjectId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

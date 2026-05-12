@@ -1,0 +1,15 @@
+{
+ "version": 12,
+ "database":"dp2",
+ "table":"CoaddPatches",
+ "is_partitioned":0,
+ "description":"The regular non-partitioned table",
+ "schema":[
+  {"name":"lsst_tract","type":"BIGINT"},
+  {"name":"lsst_patch","type":"BIGINT"},
+  {"name":"s_ra","type":"DOUBLE"},
+  {"name":"s_dec","type":"DOUBLE"},
+  {"name":"s_region","type":"VARCHAR(512)"}
+ ],
+ "auth_key":""
+}

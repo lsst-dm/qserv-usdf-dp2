@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "SSObject",
+    "index": "idx_ssObjectId",
+    "spec": "UNIQUE",
+    "comment": "The unique index on ssObjectId, which is the PK for the rows of this table",
+    "columns": [
+        {
+            "column": "ssObjectId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

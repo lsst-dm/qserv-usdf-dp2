@@ -1,0 +1,19 @@
+{
+    "database": "dp2",
+    "table": "ForcedSource",
+    "index": "idx_objectId_visit",
+    "comment": "The non-unique composite index on the objectId FK and the local column visit",
+    "columns": [
+        {
+            "column": "objectId",
+            "length": 0,
+            "ascending": 1
+        },
+        {
+            "column": "visit",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

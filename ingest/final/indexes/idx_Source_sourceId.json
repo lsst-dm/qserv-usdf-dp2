@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "Source",
+    "index": "idx_sourceId",
+    "spec": "UNIQUE",
+    "comment": "The unique index on the primary key for the source identifiers",
+    "columns": [
+        {
+            "column": "sourceId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

@@ -1,0 +1,4 @@
+cp qserv.json.template qserv.json
+sed -i 's/CHANGEME-INSTANCE-ID/'${QSERV_INSTANCE_ID}'/g' qserv.json
+sed -i 's/CHANGEME-AUTH-KEY/'$(cat /etc/secrets/repl/auth-key)'/g' qserv.json
+sed -i 's/CHANGEME-ADMIN-AUTH-KEY/'$(cat /etc/secrets/repl/admin-auth-key)'/g' qserv.json

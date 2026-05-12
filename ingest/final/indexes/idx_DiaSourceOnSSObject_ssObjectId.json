@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "DiaSourceOnSSObject",
+    "index": "idx_ssObjectId",
+    "comment": "The non-unique index on the foreign key for the referenced object identifiers in table SSObject",
+    "columns": [
+        {
+            "column": "ssObjectId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "Visit",
+    "index": "idx_visit",
+    "spec": "UNIQUE",
+    "comment": "The unique index on visit, which is the PK for the rows of this table",
+    "columns": [
+        {
+            "column": "visit",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

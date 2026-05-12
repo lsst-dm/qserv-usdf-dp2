@@ -1,0 +1,14 @@
+{
+    "database": "ivoa",
+    "table": "ObsCore",
+    "index": "idx_dataproduct_subtype",
+    "comment": "The non-unique index on the column dataproduct_subtype",
+    "columns": [
+        {
+            "column": "dataproduct_subtype",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

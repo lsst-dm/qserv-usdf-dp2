@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "IsolatedStarStellarMotions",
+    "index": "idx_referenceId",
+    "spec": "DEFAULT",
+    "comment": "The non-unique index on referenceId",
+    "columns": [
+        {
+            "column": "referenceId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

@@ -1,0 +1,7 @@
+{
+  "api-version":    56,
+  "instance-id":    "slac6test",
+  "repl-contr-url": "http://sdfqserv001:25881",
+  "auth-key":       "FIXME",
+  "admin-auth-key": "FIXME"
+}

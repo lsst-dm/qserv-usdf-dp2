@@ -1,0 +1,14 @@
+{
+    "database": "ivoa",
+    "table": "ObsCore",
+    "index": "idx_lsst_band",
+    "comment": "The non-unique index on the column lsst_band",
+    "columns": [
+        {
+            "column": "lsst_band",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

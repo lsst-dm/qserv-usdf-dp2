@@ -1,0 +1,27 @@
+{
+ "version": 12,
+ "database":"dp2",
+ "table":"Visit",
+ "is_partitioned":0,
+ "description":"The regular non-partitioned table",
+ "schema":[
+  {"name":"band","type":"CHAR(1)"},
+  {"name":"physical_filter","type":"CHAR(4)"},
+  {"name":"airmass","type":"DOUBLE"},
+  {"name":"altitude","type":"DOUBLE"},
+  {"name":"azimuth","type":"DOUBLE"},
+  {"name":"dec","type":"DOUBLE"},
+  {"name":"decl","type":"DOUBLE"},
+  {"name":"expMidptMJD","type":"DOUBLE"},
+  {"name":"expTime","type":"DOUBLE"},
+  {"name":"obsStartMJD","type":"DOUBLE"},
+  {"name":"ra","type":"DOUBLE"},
+  {"name":"skyRotation","type":"DOUBLE"},
+  {"name":"zenithDistance","type":"DOUBLE"},
+  {"name":"expMidpt","type":"DATETIME(6)"},
+  {"name":"obsStart","type":"DATETIME(6)"},
+  {"name":"visit","type":"BIGINT"},
+  {"name":"visitId","type":"BIGINT NOT NULL"}
+ ],
+ "auth_key":""
+}

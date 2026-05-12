@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "SSSource",
+    "index": "idx_ssObjectId",
+    "spec": "DEFAULT",
+    "comment": "The non-unique index on the FK ssObjectId",
+    "columns": [
+        {
+            "column": "ssObjectId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

@@ -1,0 +1,32 @@
+# Launch the ingest within the container to avoid interrupting the operation
+# if disconnected from the machine.
+
+IMAGE=ghcr.io/lsst/qserv-build-rubinqsv:2026.5.1-rc1
+CONTAINER=qserv-ingest-int6
+
+docker run --init --rm -it -d \
+  -u rubinqsv \
+  --mount src=/zfspool/management/qserv,dst=/home/rubinqsv/code/qserv,type=bind \
+  --cap-add sys_admin --cap-add sys_ptrace --security-opt seccomp=unconfined \
+  -w /home/rubinqsv/code/qserv/build \
+  -v /zfspool/data/qserv-usdf-dp02/:/zfspool/data/qserv-usdf-dp02/ \
+  --name=${CONTAINER} \
+  ${IMAGE} \
+  /bin/bash
+
+docker exec -it ${CONTAINER} bash
+
+cd /zfspool/data/qserv-usdf-dp02/ingest/final/qserv-int6
+
+
+
+# Fix the MySQL grants at workers by applying a work around for a bug
+# in the implementaton of the Relication/Ingest system:
+
+ssh rubinqsv@sdfqserv001
+cd /zfspool/management/qserv-slac/instance/slac6int
+for host in $(cat config/workers); do
+  echo $host;
+  ssh $host "mysql -h127.0.0.1 -P3369 -uroot -p****** mysql -e 'GRANT ALL PRIVILEGES ON dp2.* TO qsmaster@127.0.0.1; FLUSH PRIVILEGES'";
+done
+

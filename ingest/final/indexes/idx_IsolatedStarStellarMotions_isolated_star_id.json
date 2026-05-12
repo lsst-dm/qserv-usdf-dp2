@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "IsolatedStarStellarMotions",
+    "index": "idx_isolated_star_id",
+    "spec": "UNIQUE",
+    "comment": "The unique index on isolated_star_id, which is the PK for the rows of this table",
+    "columns": [
+        {
+            "column": "isolated_star_id",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

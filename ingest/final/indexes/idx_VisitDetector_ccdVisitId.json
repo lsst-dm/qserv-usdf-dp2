@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "VisitDetector",
+    "index": "idx_ccdVisitId",
+    "spec": "UNIQUE",
+    "comment": "The unique index on ccVisitId, which is the PK for the rows of this table",
+    "columns": [
+        {
+            "column": "ccdVisitId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "DiaSource",
+    "index": "idx_diaSourceId",
+    "spec": "UNIQUE",
+    "comment": "The unique index on the primary key for the source identifiers",
+    "columns": [
+        {
+            "column": "diaSourceId",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}
