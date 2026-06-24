@@ -60,13 +60,6 @@ def translate_host2ip(host):
 
     return host2ip[host]
 
-def get_chunk_location(api, database, chunk):
-    chunks = set([chunk,])
-    locations = api.locate_chunks(database, chunks)
-    if chunk not in locations:
-        fatal("Incorect location reported for chunk={}".format(chunk))
-    return locations[chunk]
-
 if __name__ == '__main__':
 
     args = parseArguments()

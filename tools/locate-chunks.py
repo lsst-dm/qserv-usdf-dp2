@@ -18,6 +18,9 @@ def parseArguments():
         "--database",
         """The required name of a database where to register/locate chunks.
         The database should exist.""")
+    parser.add_argument_bool(
+        "--all-replicas",
+        "Ingest contributions into all replicas")
 
     args = parser.parse_args()
     if args.database is None or args.database == "":
@@ -35,8 +38,9 @@ if __name__ == '__main__':
             chunks.add(int(line))
 
     api = ingest_api(args.qserv_config, args.debug)
-    locations = api.locate_chunks(args.database, chunks)
+    chunk_locations = api.locate_chunks(args.database, chunks, args.all_replicas)
 
-    for chunk,loc in locations.items():
-        print(loc)
+    for locations in chunk_locations.values():
+        for location in locations:
+            print(location)
 

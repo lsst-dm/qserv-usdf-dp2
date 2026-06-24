@@ -98,15 +98,18 @@ class ingest_api:
 
         self._delete(url, data)
 
-    def locate_chunks(self, database, chunks):
+    def locate_chunks(self, database, chunks, all_replicas=False):
         if self._debug:
-            _info("LOCATE:    database={} chunks={}".format(database, chunks))
+            _info("LOCATE:    database={} chunks={} all_replicas={}".format(database, chunks, all_replicas))
 
         data = {
             "database": database,
             "chunks":   [chunk for chunk in chunks],
         }
-        url = "{}/ingest/chunks".format(self._qserv_config["repl-contr-url"])
+        if all_replicas:
+            url = "{}/ingest/chunks-multi".format(self._qserv_config["repl-contr-url"])
+        else:
+            url = "{}/ingest/chunks".format(self._qserv_config["repl-contr-url"])
 
         respJson = self._post(url, data)
 
@@ -116,7 +119,11 @@ class ingest_api:
         locations = {}
         key = "location" if "location" in respJson else "locations"
         for location in respJson[key]:
-            locations[location["chunk"]] = location
+            chunk = location["chunk"]
+            if chunk in locations:
+                locations[chunk].append(location)
+            else:
+                locations[chunk] = [location,]
 
         return locations
 

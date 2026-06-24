@@ -11,9 +11,12 @@ def info(msg):
     sys.stdout.write("{}  {}\n".format(timestamp(), msg))
     sys.stdout.flush()
 
-def fatal(msg):
+def error(msg):
     sys.stderr.write("{}  {}\n".format(timestamp(), msg))
     sys.stderr.flush()
+
+def fatal(msg):
+    error(msg)
     sys.exit(1)
 
 class argument_parser:

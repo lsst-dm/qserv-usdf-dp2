@@ -61,13 +61,6 @@ def translate_host2ip(host):
 
     return host2ip[host]
 
-def get_chunk_location(api, database, chunk):
-    chunks = set([chunk,])
-    locations = api.locate_chunks(database, chunks)
-    if chunk not in locations:
-        fatal("Incorect location reported for chunk={}".format(chunk))
-    return locations[chunk]
-
 if __name__ == '__main__':
 
     args = parseArguments()
@@ -77,13 +70,13 @@ if __name__ == '__main__':
         urls = [url[:-1] for url in f]
 
     api = ingest_api(args.qserv_config, args.debug)
-    itable_locations = api.locate_regular_tables(args.database)
+    table_locations = api.locate_regular_tables(args.database)
     trans_id = api.start_trans(args.database)
     if args.verbose:
         info("TRANS:     {}\tSTARTED".format(trans_id))
 
     contrib_entries = {}
-    for location in itable_locations:
+    for location in table_locations:
         location["http_addr"] = translate_host2ip(location["http_host_name"])
         for url in urls:
             contrib_descr = {

@@ -21,6 +21,9 @@ def parseArguments():
         "--table",
         """The required name of a table where the contributions will be ingsted.
         The table should exist and it should not be published.""")
+    parser.add_argument_bool(
+        "--all-replicas",
+        "Ingest contributions into all replicas")
     parser.add_argument(
         "--fields-terminated-by",
         "Field separator that matches the CSV dialect of the contributions.",
@@ -47,9 +50,9 @@ def parseArguments():
 
     return args
 
-def get_chunk_location(api, database, chunk):
+def get_chunk_locations(api, database, all_replicas, chunk):
     chunks = set([chunk,])
-    locations = api.locate_chunks(database, chunks)
+    locations = api.locate_chunks(database, chunks, all_replicas)
     if chunk not in locations:
         fatal("Incorect location reported for chunk={}".format(chunk))
     return locations[chunk]
@@ -61,31 +64,54 @@ if __name__ == '__main__':
     api = ingest_api(args.qserv_config, args.debug)
 
     chunk = contrib2chunk(args.url)
-    chunk_location = get_chunk_location(api, args.database, chunk)
+    chunk_locations = get_chunk_locations(api, args.database, args.all_replicas, chunk)
 
     trans_id = api.start_trans(args.database)
+    contrib_entries = []
+    for location in chunk_locations:
+        contrib_descr = {
+            "transaction_id":       trans_id,
+            "table":                args.table,
+            "fields_terminated_by": args.fields_terminated_by,
+            "fields_enclosed_by":   args.fields_enclosed_by,
+            "chunk":                chunk,
+            "overlap":              contrib2overlap(args.url),
+            "url":                  args.url}
 
-    contrib_descr = {
-        "transaction_id":       trans_id,
-        "table":                args.table,
-        "fields_terminated_by": args.fields_terminated_by,
-        "fields_enclosed_by":   args.fields_enclosed_by,
-        "chunk":                chunk,
-        "overlap":              contrib2overlap(args.url),
-        "url":                  args.url}
-
-    contrib = api.async_contrib(chunk_location, contrib_descr)
-    if args.verbose:
-        info("CONTRIB:   {}\t{}\t{}".format(contrib["id"], contrib["status"], chunk_location["worker"]))
-    while contrib["status"] == "IN_PROGRESS":
-        time.sleep(1)
-        contrib = api.async_contrib_status(chunk_location, contrib["id"])
+        contrib = api.async_contrib(location, contrib_descr)
+        contrib_entries.append({
+            "contrib":  contrib,
+            "location": location
+        })
         if args.verbose:
-             info("CONTRIB:   {}\t{}\t{}".format(contrib["id"], contrib["status"], chunk_location["worker"]))
+            info("CONTRIB:   {}\t{}\t{}".format(contrib["id"], contrib["status"], location["worker"]))
 
-    if contrib["status"] == "FINISHED":
+    # Track contributions until all finish or fail
+    num_failed = 0
+    while True:
+        num_in_progress = 0
+        num_failed = 0
+        for entry in contrib_entries:
+            if entry["contrib"]["status"] == "IN_PROGRESS":
+                num_in_progress = num_in_progress + 1
+                time.sleep(1)
+                entry["contrib"] = api.async_contrib_status(entry["location"], entry["contrib"]["id"])
+                if args.verbose:
+                    info("CONTRIB:   {}\t{}\t{}".format(entry["contrib"]["id"], entry["contrib"]["status"], entry["location"]["worker"]))
+            elif entry["contrib"]["status"] == "FINISHED":
+                if args.verbose:
+                    info("CONTRIB:   {}\t{}\t{}".format(entry["contrib"]["id"], entry["contrib"]["status"], entry["location"]["worker"]))
+            else:
+                num_failed = num_failed + 1
+                if args.verbose:
+                    info("CONTRIB:   {}\t{}\t{}\t{}".format(entry["contrib"]["id"], entry["contrib"]["status"], entry["location"]["worker"], entry["contrib"]["error"]))
+        if num_in_progress == 0:
+            break
+
+    # Finish or abort the transaction 
+    if num_failed == 0:
         api.commit_trans(trans_id)
     else:
         api.abort_trans(trans_id)
-        fatal("CONTRIB:   {}\t{}\t{}\t{}".format(contrib["id"], contrib["status"], chunk_location["worker"], contrib["error"]))
+        fatal("TRANS:     ABORTED trans_id={} num_failed_contribs={}".format(trans_id, num_failed,))
 
