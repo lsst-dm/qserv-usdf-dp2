@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "mpc_orbits",
+    "index": "idx_mpc_orbits_id",
+    "spec": "UNIQUE",
+    "comment": "The unique index on the identifier, which is the PK for the rows of this table",
+    "columns": [
+        {
+            "column": "id",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}
