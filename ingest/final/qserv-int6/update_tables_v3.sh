@@ -30,14 +30,20 @@ DATABASE=dp2
 DATABASE_OPT="--database=${DATABASE}"
 VERBOSE_OPT="--verbose"
 DEBUG_OPT=
-DIRECTOR_TABLES="Object Source DiaObject ShearObject DiaSourceOnSSObject"
-PARTITIONED_TABLES="Object Source ForcedSource DiaObject DiaSource DiaSourceOnDiaObject DiaSourceOnSSObject ForcedSourceOnDiaObject ShearObject"
-FULLY_REPLICATED_TABLES="SSObject SSSource Visit VisitDetector IsolatedStarStellarMotions CoaddPatches"
+
+#
+# -- IMPORTANT --
+#
+# Tables have to be dropped in the reversed depedency order.
+#
+DELETE_TABLES="ForcedSource Object ShearObject ForcedSourceOnDiaObject DiaSourceOnDiaObject DiaSourceOnSSObject DiaSource DiaObject SSObject SSSource"
+DIRECTOR_TABLES="Object DiaObject ShearObject DiaSourceOnSSObject"
+PARTITIONED_TABLES="Object ForcedSource DiaObject DiaSource DiaSourceOnDiaObject DiaSourceOnSSObject ForcedSourceOnDiaObject ShearObject"
+FULLY_REPLICATED_TABLES="SSObject SSSource"
 ALL_TABLES="${PARTITIONED_TABLES} ${FULLY_REPLICATED_TABLES}"
 
 # CSV dialect definitions for the tables
 Object_CSV_DIALECT=
-Source_CSV_DIALECT=
 ForcedSource_CSV_DIALECT=
 DiaObject_CSV_DIALECT=
 DiaSource_CSV_DIALECT=
@@ -47,15 +53,22 @@ ForcedSourceOnDiaObject_CSV_DIALECT=
 ShearObject_CSV_DIALECT=
 SSObject_CSV_DIALECT='--fields-enclosed-by="'
 SSSource_CSV_DIALECT='--fields-enclosed-by="'
-Visit_CSV_DIALECT='--fields-enclosed-by="'
-VisitDetector_CSV_DIALECT='--fields-enclosed-by="'
-IsolatedStarStellarMotions_CSV_DIALECT='--fields-enclosed-by="'
-CoaddPatches_CSV_DIALECT='--fields-enclosed-by=" --fields-terminated-by=,'
 
-APP=register-database
+APP=delete-table
+for TABLE in ${DELETE_TABLES}; do
+  LOG=${LOG_DIR}/${APP}-${TABLE}.log;
+  echo $(TIMESTAMP)"Delete table ${TABLE} -> ${LOG}";
+  ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG};
+  if [ $? -ne 0 ] ; then
+    echo $(TIMESTAMP)FAILED;
+    exit 1;
+  fi;
+done
+
+APP=unpublish-database
 LOG=${LOG_DIR}/${APP}.log
-echo $(TIMESTAMP)"Register database ${DATABASE} -> ${LOG}"
-${TOOLS}/${APP}.py ${DATABASE_OPT} ${VERBOSE_OPT} ${DEBUG_OPT} ../${DATABASE}.json >& ${LOG}
+echo $(TIMESTAMP)"Unpublish database ${DATABASE} -> ${LOG}"
+${TOOLS}/${APP}.py ${DATABASE_OPT} ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG}
 if [ $? -ne 0 ] ; then
   echo $(TIMESTAMP)FAILED;
   exit 1;
@@ -77,7 +90,13 @@ for TABLE in ${PARTITIONED_TABLES}; do
   LOG=${LOG_DIR}/${APP}-${TABLE}.log;
   CSV_DIALECT="${TABLE}_CSV_DIALECT";
   echo $(TIMESTAMP)"Ingest chunk contributions into ${TABLE} -> ${LOG}";
-  ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${!CSV_DIALECT} ${VERBOSE_OPT} ${DEBUG_OPT} ${DATA_DIR}/${TABLE}.urls >& ${LOG};
+  #
+  # -- IMPORTANT --
+  #
+  # Ingesting into all replicas in case if ingesting into previously published
+  # database with th ereplication factor higher than 1.
+  #  
+  ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} --all-replicas  ${!CSV_DIALECT} ${VERBOSE_OPT} ${DEBUG_OPT} ${DATA_DIR}/${TABLE}.urls >& ${LOG};
   if [ $? -ne 0 ] ; then
     echo $(TIMESTAMP)FAILED;
     exit 1;

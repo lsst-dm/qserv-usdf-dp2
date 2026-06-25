@@ -30,54 +30,26 @@ DATABASE=dp2
 DATABASE_OPT="--database=${DATABASE}"
 VERBOSE_OPT="--verbose"
 DEBUG_OPT=
-DIRECTOR_TABLES="Object Source DiaObject ShearObject DiaSourceOnSSObject"
-PARTITIONED_TABLES="Object Source ForcedSource DiaObject DiaSource DiaSourceOnDiaObject DiaSourceOnSSObject ForcedSourceOnDiaObject ShearObject"
-FULLY_REPLICATED_TABLES="SSObject SSSource Visit VisitDetector IsolatedStarStellarMotions CoaddPatches"
-ALL_TABLES="${PARTITIONED_TABLES} ${FULLY_REPLICATED_TABLES}"
+
+FULLY_REPLICATED_TABLES=CoaddPatches
 
 # CSV dialect definitions for the tables
-Object_CSV_DIALECT=
-Source_CSV_DIALECT=
-ForcedSource_CSV_DIALECT=
-DiaObject_CSV_DIALECT=
-DiaSource_CSV_DIALECT=
-DiaSourceOnDiaObject_CSV_DIALECT=
-DiaSourceOnSSObject_CSV_DIALECT=
-ForcedSourceOnDiaObject_CSV_DIALECT=
-ShearObject_CSV_DIALECT=
-SSObject_CSV_DIALECT='--fields-enclosed-by="'
-SSSource_CSV_DIALECT='--fields-enclosed-by="'
-Visit_CSV_DIALECT='--fields-enclosed-by="'
-VisitDetector_CSV_DIALECT='--fields-enclosed-by="'
-IsolatedStarStellarMotions_CSV_DIALECT='--fields-enclosed-by="'
 CoaddPatches_CSV_DIALECT='--fields-enclosed-by=" --fields-terminated-by=,'
 
-APP=register-database
+APP=unpublish-database
 LOG=${LOG_DIR}/${APP}.log
-echo $(TIMESTAMP)"Register database ${DATABASE} -> ${LOG}"
-${TOOLS}/${APP}.py ${DATABASE_OPT} ${VERBOSE_OPT} ${DEBUG_OPT} ../${DATABASE}.json >& ${LOG}
+echo $(TIMESTAMP)"Unpublish database ${DATABASE} -> ${LOG}"
+${TOOLS}/${APP}.py ${DATABASE_OPT} ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG}
 if [ $? -ne 0 ] ; then
   echo $(TIMESTAMP)FAILED;
   exit 1;
 fi
 
 APP=register-table
-for TABLE in ${ALL_TABLES}; do
+for TABLE in ${FULLY_REPLICATED_TABLES}; do
   LOG=${LOG_DIR}/${APP}-${TABLE}.log;
   echo $(TIMESTAMP)"Register table ${TABLE} -> ${LOG}";
   ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${VERBOSE_OPT} ${DEBUG_OPT} ${TABLE_CONFIG}/${TABLE}.json >& ${LOG};
-  if [ $? -ne 0 ] ; then
-    echo $(TIMESTAMP)FAILED;
-    exit 1;
-  fi;
-done
-
-APP=async-contrib-chunks
-for TABLE in ${PARTITIONED_TABLES}; do
-  LOG=${LOG_DIR}/${APP}-${TABLE}.log;
-  CSV_DIALECT="${TABLE}_CSV_DIALECT";
-  echo $(TIMESTAMP)"Ingest chunk contributions into ${TABLE} -> ${LOG}";
-  ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${!CSV_DIALECT} ${VERBOSE_OPT} ${DEBUG_OPT} ${DATA_DIR}/${TABLE}.urls >& ${LOG};
   if [ $? -ne 0 ] ; then
     echo $(TIMESTAMP)FAILED;
     exit 1;
@@ -105,19 +77,8 @@ if [ $? -ne 0 ] ; then
   exit 1;
 fi
 
-APP=create-director-index
-for TABLE in ${DIRECTOR_TABLES}; do
-  LOG=${LOG_DIR}/${APP}-${TABLE}.log;
-  echo $(TIMESTAMP)"Create director index on ${TABLE} -> ${LOG}";
-  ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG};
-  if [ $? -ne 0 ] ; then
-    echo $(TIMESTAMP)FAILED;
-    exit 1;
-  fi;
-done
-
 APP=create-table-index
-for TABLE in ${ALL_TABLES}; do
+for TABLE in ${FULLY_REPLICATED_TABLES}; do
   for idx in $(ls ${INDEX_CONFIG} | grep "_${TABLE}_" | grep json); do
     LOG=${LOG_DIR}/${APP}-${idx::-5}.log;
     echo $(TIMESTAMP)"Create table index ${idx::-5} -> ${LOG}";
@@ -130,7 +91,7 @@ for TABLE in ${ALL_TABLES}; do
 done
 
 APP=rebuild-row-counters
-for TABLE in ${ALL_TABLES}; do
+for TABLE in ${FULLY_REPLICATED_TABLES}; do
   LOG=${LOG_DIR}/${APP}-${TABLE}.log;
   echo $(TIMESTAMP)"Build row counter stats on ${TABLE} -> ${LOG}";
   ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG};

@@ -9,14 +9,14 @@ docker run --init --rm -it -d \
   --mount src=/zfspool/management/qserv,dst=/home/rubinqsv/code/qserv,type=bind \
   --cap-add sys_admin --cap-add sys_ptrace --security-opt seccomp=unconfined \
   -w /home/rubinqsv/code/qserv/build \
-  -v /zfspool/data/qserv-usdf-dp02/:/zfspool/data/qserv-usdf-dp02/ \
+  -v /zfspool/data/qserv-usdf-dp2/:/zfspool/data/qserv-usdf-dp2/ \
   --name=${CONTAINER} \
   ${IMAGE} \
   /bin/bash
 
 docker exec -it ${CONTAINER} bash
 
-cd /zfspool/data/qserv-usdf-dp02/ingest/final/qserv-int6
+cd /zfspool/data/qserv-usdf-dp2/ingest/final/qserv-int6
 
 
 
