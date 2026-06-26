@@ -30,9 +30,9 @@ DATABASE=dp2
 DATABASE_OPT="--database=${DATABASE}"
 VERBOSE_OPT="--verbose"
 DEBUG_OPT=
-DIRECTOR_TABLES="Object Source DiaObject ShearObject DiaSourceOnSSObject"
-PARTITIONED_TABLES="Object Source ForcedSource DiaObject DiaSource DiaSourceOnDiaObject DiaSourceOnSSObject ForcedSourceOnDiaObject ShearObject"
-FULLY_REPLICATED_TABLES="SSObject SSSource Visit VisitDetector IsolatedStarStellarMotions CoaddPatches mpc_orbits"
+DIRECTOR_TABLES="Object Source DiaObject ShearObject DiaSourceOnSSObject IsolatedStarStellarMotions"
+PARTITIONED_TABLES="Object Source ForcedSource DiaObject DiaSource DiaSourceOnDiaObject DiaSourceOnSSObject ForcedSourceOnDiaObject ShearObject IsolatedStarStellarMotions"
+FULLY_REPLICATED_TABLES="SSObject SSSource Visit VisitDetector CoaddPatches mpc_orbits"
 ALL_TABLES="${PARTITIONED_TABLES} ${FULLY_REPLICATED_TABLES}"
 
 # CSV dialect definitions for the tables
@@ -49,7 +49,7 @@ SSObject_CSV_DIALECT='--fields-enclosed-by="'
 SSSource_CSV_DIALECT='--fields-enclosed-by="'
 Visit_CSV_DIALECT='--fields-enclosed-by="'
 VisitDetector_CSV_DIALECT='--fields-enclosed-by="'
-IsolatedStarStellarMotions_CSV_DIALECT='--fields-enclosed-by="'
+IsolatedStarStellarMotions_CSV_DIALECT=
 CoaddPatches_CSV_DIALECT='--fields-enclosed-by=" --fields-terminated-by=,'
 mpc_orbits_CSV_DIALECT="--fields-enclosed-by=' --fields-terminated-by=,"
 

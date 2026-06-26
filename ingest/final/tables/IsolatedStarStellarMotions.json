@@ -2,10 +2,14 @@
  "version": 12,
  "database":"dp2",
  "table":"IsolatedStarStellarMotions",
- "is_partitioned":0,
- "description":"The regular non-partitioned table",
+ "is_partitioned":1,
+ "director_table":"",
+ "director_key":"isolated_star_id",
+ "description":"The director table that has no children",
+ "latitude_key":"dec",
+ "longitude_key":"ra",
  "schema":[
-  {"name":"dec","type":"DOUBLE"},
+  {"name":"dec","type":"DOUBLE NOT NULL"},
   {"name":"decErr","type":"DOUBLE"},
   {"name":"decPM","type":"DOUBLE"},
   {"name":"decPMErr","type":"DOUBLE"},
@@ -16,7 +20,7 @@
   {"name":"epoch","type":"DOUBLE"},
   {"name":"parallax","type":"DOUBLE"},
   {"name":"parallaxErr","type":"DOUBLE"},
-  {"name":"ra","type":"DOUBLE"},
+  {"name":"ra","type":"DOUBLE NOT NULL"},
   {"name":"raErr","type":"DOUBLE"},
   {"name":"raPM","type":"DOUBLE"},
   {"name":"raPMErr","type":"DOUBLE"},
@@ -31,8 +35,10 @@
   {"name":"ref_parallax","type":"DOUBLE"},
   {"name":"ref_ra","type":"DOUBLE"},
   {"name":"ref_raPM","type":"DOUBLE"},
-  {"name":"isolated_star_id","type":"BIGINT"},
-  {"name":"referenceId","type":"BIGINT"}
+  {"name":"isolated_star_id","type":"BIGINT NOT NULL"},
+  {"name":"referenceId","type":"BIGINT"},
+  {"name":"chunkId","type":"INT UNSIGNED NOT NULL"},
+  {"name":"subChunkId","type":"INT UNSIGNED NOT NULL"}
  ],
  "auth_key":""
 }
