@@ -1,0 +1,21 @@
+{
+ "version": 12,
+ "database":"dp2",
+ "table":"numbered_identifications",
+ "is_partitioned":0,
+ "description":"The regular non-partitioned table",
+ "schema":[
+  {"name":"id","type":"INT NOT NULL"},
+  {"name":"packed_primary_provisional_designation","type":"VARCHAR(255)"},
+  {"name":"unpacked_primary_provisional_designation","type":"VARCHAR(255)"},
+  {"name":"permid","type":"VARCHAR(255)"},
+  {"name":"iau_designation","type":"VARCHAR(255)"},
+  {"name":"iau_name","type":"VARCHAR(255)"},
+  {"name":"numbered_publication_references","type":"TEXT"},
+  {"name":"named_publication_references","type":"TEXT"},
+  {"name":"naming_credit","type":"VARCHAR(255)"},
+  {"name":"created_at","type":"DATETIME(6)"},
+  {"name":"updated_at","type":"DATETIME(6)"}
+ ],
+ "auth_key":""
+}

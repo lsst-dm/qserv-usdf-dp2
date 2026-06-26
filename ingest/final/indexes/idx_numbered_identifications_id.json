@@ -1,0 +1,15 @@
+{
+    "database": "dp2",
+    "table": "numbered_identifications",
+    "index": "idx_numbered_identifications_id",
+    "spec": "UNIQUE",
+    "comment": "The unique index on the identifier, which is the PK for the rows of this table",
+    "columns": [
+        {
+            "column": "id",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

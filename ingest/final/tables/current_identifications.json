@@ -1,0 +1,21 @@
+{
+ "version": 12,
+ "database":"dp2",
+ "table":"current_identifications",
+ "is_partitioned":0,
+ "description":"The regular non-partitioned table",
+ "schema":[
+  {"name":"id","type":"INT NOT NULL"},
+  {"name":"packed_primary_provisional_designation","type":"VARCHAR(255)"},
+  {"name":"packed_secondary_provisional_designation","type":"VARCHAR(255)"},
+  {"name":"unpacked_primary_provisional_designation","type":"VARCHAR(255)"},
+  {"name":"unpacked_secondary_provisional_designation","type":"VARCHAR(255)"},
+  {"name":"published","type":"INT"},
+  {"name":"identifier_ids","type":"TEXT"},
+  {"name":"object_type","type":"INT"},
+  {"name":"numbered","type":"TINYINT(1)"},
+  {"name":"created_at","type":"DATETIME(6)"},
+  {"name":"updated_at","type":"DATETIME(6)"}
+ ],
+ "auth_key":""
+}
