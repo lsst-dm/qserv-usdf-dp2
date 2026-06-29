@@ -35,6 +35,9 @@ PARTITIONED_TABLES="Object Source ForcedSource DiaObject DiaSource DiaSourceOnDi
 FULLY_REPLICATED_TABLES="SSObject SSSource Visit VisitDetector CoaddPatches mpc_orbits current_identifications numbered_identifications"
 ALL_TABLES="${PARTITIONED_TABLES} ${FULLY_REPLICATED_TABLES}"
 
+# Table parameters
+mpc_orbits_TABLE_PARAMS="--charset=utf8mb4 --collation=utf8mb4_uca1400_ai_ci"
+
 # CSV dialect definitions for the tables
 Object_CSV_DIALECT=
 Source_CSV_DIALECT=
@@ -67,8 +70,9 @@ fi
 APP=register-table
 for TABLE in ${ALL_TABLES}; do
   LOG=${LOG_DIR}/${APP}-${TABLE}.log;
+  TABLE_PARAMS="${TABLE}_TABLE_PARAMS";
   echo $(TIMESTAMP)"Register table ${TABLE} -> ${LOG}";
-  ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${VERBOSE_OPT} ${DEBUG_OPT} ${TABLE_CONFIG}/${TABLE}.json >& ${LOG};
+  ${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} ${!TABLE_PARAMS} ${VERBOSE_OPT} ${DEBUG_OPT} ${TABLE_CONFIG}/${TABLE}.json >& ${LOG};
   if [ $? -ne 0 ] ; then
     echo $(TIMESTAMP)FAILED;
     exit 1;
