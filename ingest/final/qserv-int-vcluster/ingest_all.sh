@@ -152,5 +152,18 @@ for TABLE in ${ALL_TABLES}; do
   fi;
 done
 
+# Post-ingest fixup of the table schema
+
+APP=alter-table
+TABLE=mpc_orbits
+ALTER_SPEC='ADD COLUMN designation VARCHAR(255) GENERATED ALWAYS AS (unpacked_primary_provisional_designation) AFTER unpacked_primary_provisional_designation'
+LOG=${LOG_DIR}/${APP}-${TABLE}.log
+echo $(TIMESTAMP)"Fixing table schema ${TABLE} -> ${LOG}"
+${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} "${ALTER_SPEC}" ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG}
+if [ $? -ne 0 ] ; then
+  echo $(TIMESTAMP)FAILED;
+  exit 1;
+fi
+
 echo $(TIMESTAMP)DONE
 

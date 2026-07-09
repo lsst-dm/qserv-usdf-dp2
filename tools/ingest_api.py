@@ -369,6 +369,16 @@ class ingest_api:
         }
         return self._put(url, data)
 
+    def alter_table(self, database, table, spec):
+        if self._debug:
+            _info("SPEC:      database={} table={} spec={}".format(database, table, spec))
+
+        url = "{}/replication/sql/table/schema/{}/{}".format(self._qserv_config["repl-contr-url"], database, table)
+        data = {
+            "spec": spec,
+        }
+        return self._put(url, data)
+
     def set_scan_rating(self, database, table, rating):
         if self._debug:
             _info("SCAN:      database={} table={} rating={}".format(database, table, rating))
