@@ -6,8 +6,8 @@
  "director_table":"",
  "director_key":"sourceId",
  "description":"The director that has no child tables",
- "latitude_key":"coord_dec",
- "longitude_key":"coord_ra",
+ "latitude_key":"dec",
+ "longitude_key":"ra",
  "schema":[
   {"name":"band","type":"CHAR(1)"},
   {"name":"physical_filter","type":"CHAR(4)"},
