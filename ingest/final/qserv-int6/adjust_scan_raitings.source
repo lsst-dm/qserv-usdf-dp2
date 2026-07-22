@@ -1,0 +1,4 @@
+../../../tools/set-scan-rating.py --database=dp2 --table=DiaSource 2
+../../../tools/set-scan-rating.py --database=dp2 --table=ForcedSource 25
+../../../tools/set-scan-rating.py --database=dp2 --table=ForcedSourceOnDiaObject 25
+../../../tools/set-scan-rating.py --database=dp2 --table=Source 15
