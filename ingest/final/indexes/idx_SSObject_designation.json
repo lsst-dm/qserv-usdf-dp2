@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "SSObject",
+    "index": "idx_SSObject_designation",
+    "comment": "The non-unique index on the column designation",
+    "columns": [
+        {
+            "column": "designation",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

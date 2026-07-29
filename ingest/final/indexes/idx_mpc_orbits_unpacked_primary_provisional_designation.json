@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "mpc_orbits",
+    "index": "idx_mpc_orbits_unpacked_primary_provisional_designation",
+    "comment": "The non-unique index on the column unpacked_primary_provisional_designation",
+    "columns": [
+        {
+            "column": "unpacked_primary_provisional_designation",
+            "length": 12,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

@@ -36,6 +36,7 @@ FULLY_REPLICATED_TABLES="SSObject SSSource Visit VisitDetector CoaddPatches mpc_
 ALL_TABLES="${PARTITIONED_TABLES} ${FULLY_REPLICATED_TABLES}"
 
 # Table parameters
+SSObject_TABLE_PARAMS="--charset=utf8mb4 --collation=utf8mb4_uca1400_ai_ci"
 mpc_orbits_TABLE_PARAMS="--charset=utf8mb4 --collation=utf8mb4_uca1400_ai_ci"
 
 # CSV dialect definitions for the tables
@@ -149,16 +150,16 @@ done
 
 # Post-ingest fixup of the table schema
 
-APP=alter-table
-TABLE=mpc_orbits
-ALTER_SPEC='ADD COLUMN designation VARCHAR(255) GENERATED ALWAYS AS (unpacked_primary_provisional_designation) AFTER unpacked_primary_provisional_designation'
-LOG=${LOG_DIR}/${APP}-${TABLE}.log
-echo $(TIMESTAMP)"Fixing table schema ${TABLE} -> ${LOG}"
-${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} "${ALTER_SPEC}" ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG}
-if [ $? -ne 0 ] ; then
-  echo $(TIMESTAMP)FAILED;
-  exit 1;
-fi
+#APP=alter-table
+#TABLE=mpc_orbits
+#ALTER_SPEC='ADD COLUMN designation VARCHAR(255) GENERATED ALWAYS AS (unpacked_primary_provisional_designation) AFTER unpacked_primary_provisional_designation'
+#LOG=${LOG_DIR}/${APP}-${TABLE}.log
+#echo $(TIMESTAMP)"Fixing table schema ${TABLE} -> ${LOG}"
+#${TOOLS}/${APP}.py ${DATABASE_OPT} --table=${TABLE} "${ALTER_SPEC}" ${VERBOSE_OPT} ${DEBUG_OPT} >& ${LOG}
+#if [ $? -ne 0 ] ; then
+#  echo $(TIMESTAMP)FAILED;
+#  exit 1;
+#fi
 
 echo $(TIMESTAMP)DONE
 

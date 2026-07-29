@@ -8,7 +8,6 @@
   {"name":"id","type":"BIGINT NOT NULL"},
   {"name":"packed_primary_provisional_designation","type":"VARCHAR(255)"},
   {"name":"unpacked_primary_provisional_designation","type":"VARCHAR(255)"},
-  {"name":"designation","type":"CHAR(12) GENERATED ALWAYS AS (SUBSTR(unpacked_primary_provisional_designation,1,12)) STORED"},
   {"name":"mpc_orb_jsonb","type":"TEXT"},
   {"name":"created_at","type":"DATETIME(6)"},
   {"name":"updated_at","type":"DATETIME(6)"},

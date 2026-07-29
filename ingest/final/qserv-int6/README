@@ -30,3 +30,61 @@ for host in $(cat config/workers); do
   ssh $host "mysql -h127.0.0.1 -P3369 -uroot -p****** mysql -e 'GRANT ALL PRIVILEGES ON dp2.* TO qsmaster@127.0.0.1; FLUSH PRIVILEGES'";
 done
 
+# Add columnn to the Replication database
+
+ssh sdfqserv009
+mysql --protocol=tcp -hlocalhost -P23309 -uroot -p****** qservReplica
+
+SELECT * FROM config_database_table_schema WHERE `table`='mpc_orbits';
++----------+------------+--------------+------------------------------------------+-----------------+
+| database | table      | col_position | col_name                                 | col_type        |
++----------+------------+--------------+------------------------------------------+-----------------+
+| dp2      | mpc_orbits |            0 | qserv_trans_id                           | INT NOT NULL    |
+| dp2      | mpc_orbits |            1 | id                                       | BIGINT NOT NULL |
+| dp2      | mpc_orbits |            2 | packed_primary_provisional_designation   | VARCHAR(255)    |
+| dp2      | mpc_orbits |            3 | unpacked_primary_provisional_designation | VARCHAR(255)    |
+| dp2      | mpc_orbits |            4 | mpc_orb_jsonb                            | TEXT            |
+.
+
+UPDATE config_database_table_schema SET col_position = col_position + 101 WHERE `table`='mpc_orbits' AND col_position >3;
+Query OK, 49 rows affected (0.003 sec)
+Rows matched: 49  Changed: 49  Warnings: 0
+
+SELECT * FROM config_database_table_schema WHERE `table`='mpc_orbits';
++----------+------------+--------------+------------------------------------------+-----------------+
+| database | table      | col_position | col_name                                 | col_type        |
++----------+------------+--------------+------------------------------------------+-----------------+
+| dp2      | mpc_orbits |            0 | qserv_trans_id                           | INT NOT NULL    |
+| dp2      | mpc_orbits |            1 | id                                       | BIGINT NOT NULL |
+| dp2      | mpc_orbits |            2 | packed_primary_provisional_designation   | VARCHAR(255)    |
+| dp2      | mpc_orbits |            3 | unpacked_primary_provisional_designation | VARCHAR(255)    |
+| dp2      | mpc_orbits |          105 | mpc_orb_jsonb                            | TEXT            |
+.
+
+INSERT INTO config_database_table_schema VALUES ('dp2','mpc_orbits',4,'designation','CHAR(12) DEFAULT SUBSTR(unpacked_primary_provisional_designation,1,12)');
+
+SELECT * FROM config_database_table_schema WHERE `table`='mpc_orbits';
++----------+------------+--------------+------------------------------------------+------------------------------------------------------------------------+
+| database | table      | col_position | col_name                                 | col_type                                                               |
++----------+------------+--------------+------------------------------------------+------------------------------------------------------------------------+
+| dp2      | mpc_orbits |            0 | qserv_trans_id                           | INT NOT NULL                                                           |
+| dp2      | mpc_orbits |            1 | id                                       | BIGINT NOT NULL                                                        |
+| dp2      | mpc_orbits |            2 | packed_primary_provisional_designation   | VARCHAR(255)                                                           |
+| dp2      | mpc_orbits |            3 | unpacked_primary_provisional_designation | VARCHAR(255)                                                           |
+| dp2      | mpc_orbits |            4 | designation                              | CHAR(12) DEFAULT SUBSTR(unpacked_primary_provisional_designation,1,12) |
+| dp2      | mpc_orbits |          105 | mpc_orb_jsonb                            | TEXT                                                                   |.
+.
+
+UPDATE config_database_table_schema SET col_position = col_position - 100 WHERE `table`='mpc_orbits' AND col_position >4;
+
+SELECT * FROM config_database_table_schema WHERE `table`='mpc_orbits';
++----------+------------+--------------+------------------------------------------+------------------------------------------------------------------------+
+| database | table      | col_position | col_name                                 | col_type                                                               |
++----------+------------+--------------+------------------------------------------+------------------------------------------------------------------------+
+| dp2      | mpc_orbits |            0 | qserv_trans_id                           | INT NOT NULL                                                           |
+| dp2      | mpc_orbits |            1 | id                                       | BIGINT NOT NULL                                                        |
+| dp2      | mpc_orbits |            2 | packed_primary_provisional_designation   | VARCHAR(255)                                                           |
+| dp2      | mpc_orbits |            3 | unpacked_primary_provisional_designation | VARCHAR(255)                                                           |
+| dp2      | mpc_orbits |            4 | designation                              | CHAR(12) DEFAULT SUBSTR(unpacked_primary_provisional_designation,1,12) |
+| dp2      | mpc_orbits |            5 | mpc_orb_jsonb                            | TEXT                                                                   |
+
