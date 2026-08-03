@@ -5,5 +5,5 @@
  "num_stripes":340,
  "num_sub_stripes":3,
  "overlap":0.01667,
- "description":"IVOA Catalog corresponding the Rubin ComCam run in Fall 2024"
+ "description":"IVOA Catalog corresponding the Rubin releases DP1 and DP2"
 }
