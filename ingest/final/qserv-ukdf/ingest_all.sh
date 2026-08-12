@@ -30,7 +30,7 @@ DATABASE=dp2
 DATABASE_OPT="--database=${DATABASE}"
 ALL_REPLICAS_OPT="--all-replicas"
 VERBOSE_OPT="--verbose"
-DEBUG_OPT=
+DEBUG_OPT="--debug"
 DIRECTOR_TABLES="Object Source DiaObject ShearObject DiaSourceOnSSObject IsolatedStarStellarMotions"
 PARTITIONED_TABLES="Object Source ForcedSource DiaObject DiaSource DiaSourceOnDiaObject DiaSourceOnSSObject ForcedSourceOnDiaObject ShearObject IsolatedStarStellarMotions"
 FULLY_REPLICATED_TABLES="SSObject SSSource Visit VisitDetector CoaddPatches mpc_orbits current_identifications numbered_identifications"
