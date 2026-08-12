@@ -29,7 +29,7 @@ DATABASE=ivoa
 DATABASE_OPT="--database=${DATABASE}"
 ALL_REPLICAS_OPT="--all-replicas"
 VERBOSE_OPT="--verbose"
-DEBUG_OPT=
+DEBUG_OPT="--debug"
 
 Object_CSV_DIALECT=
 ObsCore_CSV_DIALECT='--fields-enclosed-by=" --fields-terminated-by=,'

@@ -28,7 +28,7 @@ DATA_DIR=${BASE_DIR}/../data-k8s-nginx
 DATABASE=ivoa
 DATABASE_OPT="--database=${DATABASE}"
 VERBOSE_OPT="--verbose"
-DEBUG_OPT=
+DEBUG_OPT="--debug"
 TABLE=ObsCore
 
 ObsCore_CSV_DIALECT='--fields-enclosed-by=" --fields-terminated-by=,'
