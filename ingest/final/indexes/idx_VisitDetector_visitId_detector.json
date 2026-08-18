@@ -1,0 +1,19 @@
+{
+    "database": "dp2",
+    "table": "VisitDetector",
+    "index": "idx_visitId_detector",
+    "comment": "The non-unique compound index on the visitId and detector identifiers",
+    "columns": [
+        {
+            "column": "visitId",
+            "length": 0,
+            "ascending": 1
+        },
+        {
+            "column": "detector",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

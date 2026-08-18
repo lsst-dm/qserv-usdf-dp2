@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "VisitDetector",
+    "index": "idx_detector",
+    "comment": "The non-unique index on the detector identifier",
+    "columns": [
+        {
+            "column": "detector",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}

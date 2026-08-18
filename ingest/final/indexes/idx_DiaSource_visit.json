@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "DiaSource",
+    "index": "idx_visit",
+    "comment": "The non-unique index on the visit identifier which is the FK for the columns VisitDetector.visitId and VisitDetector.visit",
+    "columns": [
+        {
+            "column": "visit",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}
