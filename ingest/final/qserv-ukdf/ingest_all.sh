@@ -74,6 +74,16 @@ if [ $? -ne 0 ] ; then
   exit 1;
 fi
 
+APP=set-ingest-config
+LOG=${LOG_DIR}/${APP}.log
+echo $(TIMESTAMP)"Configuring ingest parameters for database ${DATABASE} -> ${LOG}"
+${TOOLS}/${APP}.py ${DATABASE_OPT} ${VERBOSE_OPT} ${DEBUG_OPT} ./${DATABASE}.config.json >& ${LOG}
+if [ $? -ne 0 ] ; then
+  echo $(TIMESTAMP)FAILED;
+  exit 1;
+fi
+
+
 APP=register-table
 for TABLE in ${ALL_TABLES}; do
   LOG=${LOG_DIR}/${APP}-${TABLE}.log;
