@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "numbered_identifications",
+    "index": "idx_packed_primary_provisional_designation",
+    "comment": "The non-unique index on the column packed_primary_provisional_designation",
+    "columns": [
+        {
+            "column": "packed_primary_provisional_designation",
+            "length": 12,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}
