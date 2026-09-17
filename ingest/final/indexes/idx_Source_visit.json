@@ -1,0 +1,14 @@
+{
+    "database": "dp2",
+    "table": "Source",
+    "index": "idx_visit",
+    "comment": "The non-unique index on the column visit",
+    "columns": [
+        {
+            "column": "visit",
+            "length": 0,
+            "ascending": 1
+        }
+    ],
+    "admin_auth_key":""
+}
