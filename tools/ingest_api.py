@@ -379,6 +379,20 @@ class ingest_api:
         }
         return self._put(url, data)
 
+    def set_mysql_password(self, mysql_root_password, worker, user, host, password):
+        if self._debug:
+            _info("SPEC:      worker={} user={} host={}".format(worker, user, host,))
+
+        url = "{}/replication/sql/query".format(self._qserv_config["repl-contr-url"],)
+        data = {
+            "worker": worker,
+            "user": "root",
+            "password": mysql_root_password,
+            "query": "ALTER USER '{}'@'{}' IDENTIFIED BY '{}'".format(user, host, password,)
+        }
+        return self._post(url, data)
+
+
     def set_scan_rating(self, database, table, rating):
         if self._debug:
             _info("SCAN:      database={} table={} rating={}".format(database, table, rating))
@@ -388,6 +402,13 @@ class ingest_api:
             "scanRating": rating,
         }
         return self._put(url, data)
+
+    def _get_repl_config(self):
+        if self._debug:
+            _info("GET-REP-CONFIG:")
+
+        url = "{}/replication/config".format(self._qserv_config["repl-contr-url"],)
+        return self._get(url)
 
     def _get(self, url, data=None):
         return self._request("GET", url, data)
